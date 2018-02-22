@@ -5,6 +5,7 @@
     "cheerio": "latest",
     "ejs": "^2.5.7",
     "express": "latest",
+    "nodemon": "^1.14.12",
     "request": "latest"
   }
 }
