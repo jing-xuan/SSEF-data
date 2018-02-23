@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var cheerio = require('cheerio');
+var fs = require('fs');
 var app = express();
 
 function parseProject(jsonObj){
@@ -159,11 +160,15 @@ app.get('/', function(req, res){
     var n = data.search('"projectId":"3822","projectCode":"13","title":"');
     data = data.slice(0, n + 48) + data.slice(n + 49);
     var jsonObj = JSON.parse(data);
+    fs.writeFile('C:/JX/CS/SSEF/data.txt', data, function(err){
+      if(err) throw err;
+      console.log("file saved");
+    })
     console.log(Object.keys(jsonObj).length );
     var list = parseProject(jsonObj);
     var schList = ["NUS HIGH SCHOOL OF MATHEMATICS AND SCIENCE", "RAFFLES INSTITUTION", "HWA CHONG INSTITUTION", "NATIONAL JUNIOR COLLEGE"];
     console.log(list);
-    //res.render('index.ejs', {projects: jsonObj});
+    res.render('index.ejs', {projects: list});
   })
 })
 
