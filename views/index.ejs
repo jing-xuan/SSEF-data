@@ -1,0 +1,98 @@
+<!Doctype html>
+<html>
+<head>
+  <title>SSEF Submissions</title>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu|Open+Sans" rel="stylesheet">
+  <style>
+    html, body{
+      margin: 0%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+    #title{
+      text-align: center;
+      font-family: 'Ubuntu';
+    }
+    .tab{
+      font-family: 'Open Sans';
+    }
+    .sectionHeader{
+      font-family: 'Ubuntu';
+    }
+    .partHeader{
+      font-family: 'Open Sans';
+      font-size: 25px;
+      padding-left: 5px;
+    }
+    .section1{
+      width: 95%;
+      margin: auto;
+    }
+    .section2{
+      margin-bottom: 0;
+    }
+    .data{
+      padding-left: 5px;
+    }
+    text{
+      font-family: 'Open Sans';
+    }
+    .bar rect{
+      stroke: none;
+    }
+    .ComparisonBySchool{
+      width: 100%;
+      height: 95%;
+      padding-top: 10px;
+      margin-bottom: 10px;
+      border-top: solid;
+      border-bottom: solid;
+      padding-left: 25px;
+    }
+    .chartSchool{
+      font-size: 0.4em;
+      text-anchor: middle;
+      transform: translateX(-0.25em);
+    }
+  </style>
+</head>
+<body>
+  <h1 id = "title" >SSEF - The Comparison</h1>
+  <div class = "ComparisonBySchool">
+    <h1 class = "sectionHeader" >Comparing the 4 biggest players of SSEF</h1>
+    <div id = "section1">
+      <p class = 'partHeader'>Total Number of Submissions<p>
+    </div>
+    <div id = "section2">
+      <p class = 'partHeader'>Shortlist Rate</p>
+    </div>
+  </div>
+</body>
+<script>
+
+  $(document).ready(function(){
+    //var data = parseProject('<%- projects %>');
+    var colors = ["#00a7a8", "#2f554a", "#fad89e", "#E30613"];
+    var test = "<div class = 'data'><svg width = '1000' height = '170'>";
+    <%for(var i = 0; i < 4; i++){%>
+      var divNUSH = "<g class = 'bar'><text x = '10' y = " + <%= 22 + i*40 %> + " dy = '.35em'><%= projects[i]['school'] %></text><rect width = " + <%= projects[i]['projects']*4 %> + " height = '25' y = '" + <%= 10 + i*40 %> + "' x = '100' fill = '" +  colors[<%= i  %>]  + "'></rect><text x = "+ <%= projects[i]['projects']*4 + 110 %> + " y = '" + <%= 22 + i*40 %> + "' dy = '.35em'>" + <%= projects[i]['projects'] %> + "</text></g>"
+      test += divNUSH;
+    <%}%>
+    test += "</svg>"
+    $("#section1").append(test);
+    var test = "<svg width = '1000' height = '200' viewbox = '0 0 200 45'>"
+    <%for(var i = 0; i < 4; i++){%>
+      var cicNUSH = "<g><circle cx = '" + <%= 15 + i*40%> + "' cy = '21' r = '15.91549430918954' fill = 'transparent' stroke = '" + colors[<%= i %>] + "' stroke-width = '3' stroke-dasharray = '" + <%= ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> + ", " + <%= 100 - ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> +"' stroke-dashoffset = '25'></circle>"
+      cicNUSH += "<g><circle cx = '" + <%= 15 + i*40%> + "' cy = '21' r = '15.91549430918954' fill = 'transparent' stroke = '" + colors[<%= i %>] + "' stroke-opacity = '0.5' stroke-width = '3' stroke-dasharray = '" + <%= 100 - ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> + ", " + <%= ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> +"' stroke-dashoffset = '" + <%= 100 + 25 - ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> + "'></circle>"
+      cicNUSH += "<text y = '23' x = '" + <%= 17 + i*40%> + "' class = 'chartSchool'><%= projects[i]['school'] %></text>";
+      test += cicNUSH;
+    <%}%>
+    test += "</svg>"
+    $("#section2").append(test);
+  });
+</script>
+</html>
