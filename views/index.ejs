@@ -1,7 +1,7 @@
 <!Doctype html>
 <html>
 <head>
-  <title>SSEF Submissions</title>
+  <title>SSEF Timeline</title>
   <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -9,259 +9,134 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Open+Sans" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/2.0.1/velocity.min.js"></script>
   <style>
-    html, body{
-      margin: 0%;
-      height: 100%;
-      overflow-x: hidden;
-    }
     #title{
+      font-family: 'Ubuntu';
       text-align: center;
-      font-family: 'Ubuntu';
-    }
-    .tab{
-      font-family: 'Open Sans';
-    }
-    .sectionHeader{
-      font-family: 'Ubuntu';
-    }
-    .partHeader{
-      font-family: 'Open Sans';
-      font-size: 25px;
-      padding-left: 5px;
-    }
-    .section1{
-      margin: auto;
-    }
-    .section2{
+      margin-top: 20;
       margin-bottom: 0;
+      font-size: 3em;
+      color: white;
     }
-    text{
+    #subH{
       font-family: 'Open Sans';
-    }
-    .bar rect{
-      stroke: none;
-    }
-    .page{
-      width: 100%;
-      height: 100%;
-      padding-left: 25px;
-    }
-    .chartSchool{
-      font-size: 0.4em;
-      text-anchor: middle;
-      transform: translateX(-0.25em);
-    }
-    table{
-      padding: none;
-      margin: 0px;
-    }
-    #title{
       text-align: center;
+      font-weight: lighter;
+      margin-top: 0;
+      color: white;
     }
-    p{
-      margin: 10px;
+    body{
+      background-color: black;
     }
-    #desc{
-      width: 80%;
+    svg{
       margin: auto;
+      display: block;
+    }
+    span{
+      color: white;
+      font-size: 1.5em;
       font-family: 'Open Sans';
-    }
-    hr{
-      margin: 0;
-    }
-    .barSL{
-      transition: width .5s ease;
-    }
-    .barLbl{
-      transition: x .1 ease;
-    }
-    #opt1, #opt2{
-      cursor: pointer;
-    }
-    .dot{
-      transition: all .5s ease;
-    }
-    .select{
-      font-family: 'Open Sans';
-      font-size: 25px;
     }
     select{
       font-family: 'Open Sans';
-      font-size: 20px;
+      background-color: black;
+      color: white;
+      font-size: 1em;
       border-radius: 5px;
     }
-    select:focus{
-      outline: none;
+    #select{
+      padding-left: 150px;
     }
-    option{
-      border-radius: 5px;
-      outline: none;
+    #timeline{
+      margin-top: 50px;
     }
-    #title{
-      font-size: 50px;
-      margin: 0 auto;
-      width: 50%;
-      margin-top: 200px;
-      padding: 15px;
-      border-top: solid 2px black;
-      border-bottom: solid 2px black;
+    p{
+      color: white;
+      font-family: 'Open Sans';
+      margin: 0;
     }
-    #desc{
-      width: 50%;
-      padding-top: 25px;
-      text-align: center;
+    text{
+      font-size: 30px;
+      font-family: 'Open Sans';
     }
-    a{
-      text-decoration: none;
-      color: rgb(204,102,0);
+    use{
+      transition: y .5s ease;
     }
   </style>
-</head>
-<body>
-  <div class = "page" >
-    <h1 id = "title">SSEF - The Comparison</h1>
-    <p id = "desc">
-      This simple project started out as an attempt to use cheerio to do webscraping of a site I had to monitor.
-      After that was done I decided to learn to use svg to display this data. <br/>I'm sure I'll look back at this someday and be
-      disgusted at myself. <br/>All data displayed here is publicly available on <a href = "http://www.ssef.com.sg/ssef/projectlist.html" target="_blank">SSEF</a></p>
-    </p>
-  </div>
-  <div class = "page">
-    <h1 class = "sectionHeader" >Comparing the 4 biggest players of SSEF</h1>
-    <table>
-      <tr>
-        <td>
-          <div id = "section1">
-            <p class = 'partHeader'><span id = "opt1">Total Number of Submissions</span> |  <span id = "opt2" style = "opacity: 0.5" >Shortlisted Projects</span></p><br>
-          </div>
-        </td>
-        <td rowspan = "2" valign = "top" id = "section3" style = "padding-left: 50px;">
-          <p class = 'partHeader'>Medals won (to be updated)</p><br>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div id = "section2">
-            <p class = 'partHeader'>Shortlist Rate</p><br>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div class = "page">
-    <h1 class = "sectionHeader">Does Time of Submission Actually Matter?</h1>
-    <p  class = "select">Sort by  <select id = "select"></p>
-      <option disabled selected value>  </option>
-      <option value = "sch">School</option>
-      <option value = "status">Status</option>
-      <option disabled>Award</option>
-    </select>
-    <div id = "section4">
+  <body>
+    <h1 id = "title">SSEF - The Timeline</h1>
+    <h3 id = "subH">Does how early you register actually mean anything?</h3>
+    <div id = "timeline">
+      <div id = "select">
+        <p>Each of these dots represent 1 SSEF project, arranged in their order of registration. Choose a topic to sort them by</p>
+        <span>Sort by: </span><select id = "sort">
+           <option disabled selected value>   ---   </option>
+          <option>Status</option>
+          <option>Field</option>
+          <option>Award</option>
+        </select>
+      </div>
+      <svg viewbox = "0 0 2200 800" width = "1100px">
+        <defs>
+          <circle id = "s1" cx = "200" cy = "0" r = "2" fill = "white"/>
+        </defs>
+        <g id = 'group'>
+        </g>
+        <line x1="120" y1="700" x2="2200" y2="700" style="stroke:rgb(255, 255, 255);stroke-width:2" />
+        <text class = "label" x = "10" fill = 'white'></text>
+        <text class = "label" x = "10" fill = 'white'></text>
+        <text class = "label" x = "10" fill = 'white'></text>
+        <text class = "label" x = "10" fill = 'white'></text>
+        <text class = "label" x = "10" fill = 'white'></text>
+      </svg>
     </div>
-  </div>
-</body>
-<script>
+  </body>
+  <script>
+    var svg = document.getElementsByTagName('svg')[0];
+    <%for(var i = 0; i < projects.length; i++){%>
+      var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'use');
+      newElement.setAttribute("href", '#s1');
+      newElement.setAttribute('y', '400');
+      newElement.setAttribute('x', '<%= i*3.2%>');
+      svg.appendChild(newElement);
+    <%}%>
 
-  $(document).ready(function(){
-    var colors = ["#00a7a8", "#2f554a", "#f5b13d", "#E30613"];
-    var test = "<svg width = '750' height = '170'>";
-    <%for(var i = 0; i < 4; i++){%>
-      var divNUSH = "<g class = 'bar'><text x = '30' y = " + <%= 22 + i*40 %> + " dy = '.35em'><%= projects[i]['school'] %></text><rect class = 'barTtl' width = " + <%= projects[i]['projects']*4 %> + " height = '25' y = '" + <%= 10 + i*40 %> + "' x = '100' fill = '" +  colors[<%= i  %>]  + "'></rect>"
-      divNUSH += "<rect class = 'barSL' width = '" + <%= projects[i]['projects']*4 %> + "' height = '25' y = '" + <%= 10 + i*40 %> + "' x = '100' fill = '" +  colors[<%= i  %>]  + "'></rect>";
-      divNUSH += "<text class = 'barLbl' fill = '" +  colors[<%= i  %>]  + "' x = "+ <%=projects[i]['projects']*4 + 110 %> + " y = '" + <%= 22 + i*40 %> + "' dy = '.35em'>" + <%= projects[i]['projects'] %> + "</text></g>"
-      test += divNUSH;
-    <%}%>
-    test += "</svg>"
-    $("#section1").append(test);
-    test = "<svg width = '770' height = '200' viewbox = '0 0 150 42'>"
-    <%for(var i = 0; i < 4; i++){%>
-      var cicNUSH = "<g><circle  cx = '" + <%= 15 + i*40%> + "' cy = '23' r = '15.91549430918954' fill = 'transparent' stroke = '" + colors[<%= i %>] + "' stroke-width = '3' stroke-dasharray = '" + <%= ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> + ", " + <%= 100 - ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> +"' stroke-dashoffset = '25'></circle>"
-      cicNUSH += "<g><circle cx = '" + <%= 15 + i*40%> + "' cy = '23' r = '15.91549430918954' fill = 'transparent' stroke = '" + colors[<%= i %>] + "' stroke-opacity = '0.5' stroke-width = '3' stroke-dasharray = '" + <%= 100 - ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> + ", " + <%= ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> +"' stroke-dashoffset = '" + <%= 100 + 25 - ((projects[i]['final']['total'])/(projects[i]['projects']))*100 %> + "'></circle>"
-      cicNUSH += "<text y = '25' x = '" + <%= 17 + i*40%> + "' class = 'chartSchool'><%= projects[i]['school'] %></text>";
-      test += cicNUSH;
-    <%}%>
-    test += "</svg>"
-    $("#section2").append(test);
-    var test = "<svg width = '1300' height = '500'><g>"
-    test += "<defs><marker id='arrowhead' markerWidth='5' markerHeight='3' refX='0' refY='1.5' orient='auto'><polygon points='0 0, 5 1.5, 0 3' /></marker></defs>"
-    test += "<text class = 'delete' y = '250' x = '100' >Projects</text>"
-    <%for(var i = 0; i < timeline.length; i++){%>
-      test += "<rect class = 'dot' width = '2.5' height = '2.5' x = '" + <%= (i*2.75) +200 %> + "' y = '250' fill = 'black'></rect>";
-    <%}%>
-    <%for(var i = 0; i < 4; i++){%>
-      test += "<text class = 'label' x = '100' y = '" + <%= 100*i + 105 %> + "'></text>"
-    <%}%>
-    test += "<line x1 = '190' y1 = '450' x2 = '1250' y2 = '450'style='stroke:black;stroke-width:3' marker-end='url(#arrowhead)'/>"
-    test += "<text x = '1150' y = '480'>Time Submitted</text>"
-    test += "</g></svg>"
-    $("#section4").append(test);
-  });
-
-  $('select').on('change',
-    function(){
-    $(".delete").remove();
-    var s = this.value;
-    var test = "<svg width = '1300' height = '500'><g>"
-    <%var colors = ["#00a7a8", "#2f554a", "#f5b13d", "#E30613"];%>
-    var statusList = ["Finals", "Rejected", "Registered", "Saved"];
-    <%var statusL = ["60", "20", "10", "5"];%>
-    <%var schList = ["NUS HIGH SCHOOL OF MATHEMATICS AND SCIENCE", "RAFFLES INSTITUTION", "HWA CHONG INSTITUTION", "NATIONAL JUNIOR COLLEGE"]%>;
-    var sch = ["NUSH", "RI", "HCI", "NJC"];
-    <%for(i = 0; i < timeline.length; i++){%>
-      if(s == "sch"){
-        $(".dot:eq(<%= i %>)").attr('y', '<%= schList.indexOf(timeline[i]['sch'])*100 + 100 %>');
-        $(".dot:eq(<%= i %>)").attr('fill', '<%= colors[schList.indexOf(timeline[i]['sch'])] %>');
-      }else if(s == "status"){
-        $(".dot:eq(<%= i %>)").attr('y', '<%= statusL.indexOf(timeline[i]['status'])*100 + 100 %>');
-        $(".dot:eq(<%= i %>)").attr('fill', 'black');
+    $("#sort").change(function(){
+      if($("#sort").val() == 'Status'){
+        <%for(var i = 0; i < projects.length; i++){%>
+          var svg = document.getElementsByTagName('svg')[0];
+          <%var statusList = ["60", "20", "10", "5"];%>
+          $("use:eq(<%= i %>)").attr('y', '<%= statusList.indexOf(projects[i]['status'])*100 + 200 %>');
+        <%}%>
+        <%for(var i = 0; i < 4; i++){%>
+          <%var statusList = ["finalist", "rejected", "registered", "saved"];%>
+          $(".label:eq(<%= i %>)").text("<%= statusList[i] %>");
+          $(".label:eq(<%= i %>)").attr("y", "<%= i*100 + 202%>")
+        <%}%>
       }
-    <%}%>
-    <%for(var i = 0; i < 4; i++){%>
-      if(s == "sch"){
-        $(".label:eq(<%= i %>)").text(sch[<%= i %>]);
-      }else if(s == "status"){
-        $(".label:eq(<%= i %>)").text(statusList[<%= i %>]);
+      if($("#sort").val() == 'Field'){
+        <%for(var i = 0; i < projects.length; i++){%>
+          var svg = document.getElementsByTagName('svg')[0];
+          <%var fieldList = ["bi", "cm", "ph", "ma", "cs"];%>
+          $("use:eq(<%= i %>)").attr('y', '<%= fieldList.indexOf(projects[i]['sbj'])*100 + 200 %>');
+        <%}%>
+        <%for(var i = 0; i < 5; i++){%>
+          <%var statusList = ["finalist", "rejected", "registered", "saved"];%>
+          $(".label:eq(<%= i %>)").text("<%= fieldList[i] %>");
+          $(".label:eq(<%= i %>)").attr("y", "<%= i*100 + 202%>")
+        <%}%>
       }
-    <%}%>
-  }
-  )
-
-  $("#opt2").click(
-    <%var colors = ["#00a7a8", "#2f554a", "#f5b13d", "#E30613"];%>
-    function(){
-    $(".barTtl").attr('opacity', '0.5');
-    $("#opt2").css('opacity', '1');
-    $("#opt1").css('opacity', '0.5');
-    $(".barLbl").attr('fill', 'white');
-    <%for(var i = 0; i < 4; i++){%>
-      $(".barSL:eq(<%= i %>)").attr('width', '<%= projects[i]['final']['total']*4 %>');
-      $(".barLbl:eq(<%= i %>)").text('<%= projects[i]['final']['total'] %>');
-      $(".barLbl:eq(<%= i %>)").attr("x", "<%= projects[i]['final']['total']*4 + 70 %>");
-    <%}%>
-  });
-  $("#opt1").click(
-    function(){
-      $("#opt2").css('opacity', '0.5');
-      $("#opt1").css('opacity', '1');
-      <%for(var i = 0; i < 4; i++){%>
-        $(".barSL:eq(<%= i %>)").attr('width', '<%= projects[i]['projects']*4 %>');
-        $(".barLbl:eq(<%= i %>)").attr('x', '<%= projects[i]['projects']*4 + 110 %>');
-        $(".barLbl:eq(<%= i %>)").text('<%= projects[i]['projects'] %>');
-        $(".barLbl:eq(<%= i %>)").attr('fill', '<%= colors[i] %>');
-      <%}%>
-    }
-  );
-  $("#section2").hover(
-    function(){
-      <%for(var i = 0; i < 4; i++){%>
-        $(".chartSchool:eq(<%= i %>)").text("<%= Math.ceil(((projects[i]['final']['total'])/(projects[i]['projects']))*100) %>%");
-      <%}%>
-    },
-    function(){
-      <%for(var i = 0; i < 4; i++){%>
-        $(".chartSchool:eq(<%= i %>)").text("<%= projects[i]['school'] %>");
-      <%}%>
-    }
-  );
-</script>
+      if($("#sort").val() == 'Award'){
+        <%for(var i = 0; i < projects.length; i++){%>
+          var svg = document.getElementsByTagName('svg')[0];
+          <%var fieldList = ["Gold", "Silver", "Bronze", "Merit", "none"];%>
+          $("use:eq(<%= i %>)").attr('y', '<%= fieldList.indexOf(projects[i]['award'])*100 + 200 %>');
+        <%}%>
+        <%for(var i = 0; i < 5; i++){%>
+          <%var statusList = ["finalist", "rejected", "registered", "saved"];%>
+          $(".label:eq(<%= i %>)").text("<%= fieldList[i] %>");
+          $(".label:eq(<%= i %>)").attr("y", "<%= i*100 + 202%>")
+        <%}%>
+      }
+    })
+  </script>
 </html>
